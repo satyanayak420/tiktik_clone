@@ -16,7 +16,6 @@
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-google-login": "^5.2.2",
     "react-icons": "^4.6.0",
     "uuidv4": "^6.2.13",
     "zustand": "^4.1.3"
