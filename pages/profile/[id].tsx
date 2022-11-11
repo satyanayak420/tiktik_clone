@@ -19,6 +19,7 @@ interface IProps {
 const profile = ({ data }: IProps) => {
   const [showUserVideo, setShowUserVideos] = useState(true);
   const [videoList, setVideoList] = useState<Video[]>([]);
+
   const { user, userLikedVideos, userVideos } = data;
 
   useEffect(() => {
@@ -31,7 +32,6 @@ const profile = ({ data }: IProps) => {
   const videos = showUserVideo ? "border-b-2 border-black" : "text-gray-400";
   const liked = !showUserVideo ? "border-b-2 border-black" : "text-gray-400";
 
-  useEffect(() => {}, []);
   return (
     <div className="w-full">
       <div className="flex gap-6 md:gap-10 bg-white w-full">
