@@ -29,19 +29,25 @@ export default async function handler(
 
     res.status(200).json(data[0]);
   } else if (req.method === "PUT") {
-    const { comment, userId } = req.body;
+    const { comment, userId, key } = req.body;
     const { id }: any = req.query;
-    const data = await client
-      .patch(id)
-      .setIfMissing({ comments: [] })
-      .insert("after", "comments[-1]", [
-        {
-          comment,
-          _key: uuid(),
-          postedBy: { _type: "postedBy", _ref: userId },
-        },
-      ])
-      .commit();
+    const data = !key
+      ? await client
+          .patch(id)
+          .setIfMissing({ comments: [] })
+          .insert("after", "comments[-1]", [
+            {
+              comment,
+              _key: uuid(),
+              postedBy: { _type: "postedBy", _ref: userId },
+            },
+          ])
+          .commit()
+      : await client
+          .patch(id)
+          .unset([`comments[_key=="${key}"]`])
+          .commit();
+
     res.status(200).json(data);
   }
 }

@@ -1,3 +1,5 @@
+import { string } from "prop-types";
+
 export default {
   name: "comment",
   title: "Comment",

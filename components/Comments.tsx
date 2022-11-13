@@ -5,12 +5,16 @@ import { GoVerified } from "react-icons/go";
 import useAuthStore from "../store/authStore";
 import NoResults from "./NoResults";
 import { IUser } from "../types";
+import { MdDelete } from "react-icons/md";
+import axios from "axios";
+import { BASE_URL } from "../utils";
 
 interface IProps {
   isPostingComment: Boolean;
   comment: string;
   setComment: Dispatch<SetStateAction<string>>;
   addComment: (e: React.FormEvent) => void;
+  handleDelete: (key: string) => void;
   comments: IComment[];
 }
 
@@ -26,9 +30,12 @@ const Comments = ({
   isPostingComment,
   comments,
   addComment,
+  handleDelete,
   setComment,
 }: IProps) => {
   const { userProfile, allUsers } = useAuthStore();
+
+  console.log(comments);
 
   return (
     <div className="border-t-2 border-gray-200 pt-4 px-10 bg-[#F8F8F8] border-b-2 lg:pb-0 pb-[100px]">
@@ -63,8 +70,14 @@ const Comments = ({
                           </div>
                         </div>
                       </Link>
-                      <div className="mt-4">
+                      <div className="mt-4 flex justify-between w-full">
                         <p>{comment.comment}</p>
+                        <p
+                          className="text-2xl cursor-pointer"
+                          onClick={() => handleDelete(comment._key)}
+                        >
+                          <MdDelete />
+                        </p>
                       </div>
                     </div>
                   )
@@ -76,8 +89,8 @@ const Comments = ({
         )}
       </div>
       {userProfile && (
-        <div className="absolute bottom-0 left-0 pb-6 px-2 md:px-10">
-          <form className="flex gap-4" onSubmit={addComment}>
+        <div className="absolute bottom-0 left-0 pb-6 px-2 md:px-10 ">
+          <form className="flex gap-4 mt-8" onSubmit={addComment}>
             <input
               type="text"
               value={comment}

@@ -12,6 +12,7 @@ import { Video } from "../../types";
 import axios from "axios";
 import LikeButton from "../../components/LikeButton";
 import Comments from "../../components/Comments";
+import { uuid } from "uuidv4";
 
 interface IProps {
   postDetails: Video;
@@ -36,6 +37,13 @@ const Detail = ({ postDetails }: IProps) => {
       });
       setPost({ ...post, likes: data.likes });
     }
+  };
+
+  const handleDelete = async (key: string) => {
+    const { data } = await axios.put(`${BASE_URL}/api/post/${post._id}`, {
+      key,
+    });
+    setPost({ ...post, comments: data.comments });
   };
 
   const addComent = async (event: React.FormEvent) => {
@@ -157,6 +165,7 @@ const Detail = ({ postDetails }: IProps) => {
                 )}
               </div>
               <Comments
+                handleDelete={handleDelete}
                 comment={comment}
                 comments={post.comments}
                 setComment={setComment}
