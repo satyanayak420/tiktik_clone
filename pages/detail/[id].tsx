@@ -13,6 +13,7 @@ import axios from "axios";
 import LikeButton from "../../components/LikeButton";
 import Comments from "../../components/Comments";
 import { uuid } from "uuidv4";
+import { IComment } from "../../components/Comments";
 
 interface IProps {
   postDetails: Video;
@@ -24,6 +25,8 @@ const Detail = ({ postDetails }: IProps) => {
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const [comment, setComment] = useState("");
   const [isPostingComment, setIsPostingComment] = useState(false);
+  const [editKey, setEditKey] = useState("");
+  const [edit, setEdit] = useState(false);
   const router = useRouter();
   const { userProfile }: any = useAuthStore();
   console.log(userProfile);
@@ -39,25 +42,41 @@ const Detail = ({ postDetails }: IProps) => {
     }
   };
 
-  const handleDelete = async (key: string) => {
+  const addComent = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (userProfile && comment) {
+      setIsPostingComment(true);
+      const { data } = edit
+        ? await axios.put(`${BASE_URL}/api/post/${post._id}`, {
+            key: editKey,
+            edit,
+            comment,
+            userId: userProfile._id,
+          })
+        : await axios.put(`${BASE_URL}/api/post/${post._id}`, {
+            userId: userProfile._id,
+            comment,
+          });
+      setPost({ ...post, comments: data.comments });
+      setComment("");
+      setEditKey("");
+      setIsPostingComment(false);
+    }
+  };
+
+  const handleCommentDelete = async (key: string) => {
     const { data } = await axios.put(`${BASE_URL}/api/post/${post._id}`, {
       key,
     });
     setPost({ ...post, comments: data.comments });
   };
 
-  const addComent = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (userProfile && comment) {
-      setIsPostingComment(true);
-      const { data } = await axios.put(`${BASE_URL}/api/post/${post._id}`, {
-        userId: userProfile._id,
-        comment,
-      });
-      setPost({ ...post, comments: data.comments });
-      setComment("");
-      setIsPostingComment(false);
-    }
+  const handleCommentEdit = async (comment: IComment, edit: boolean) => {
+    setEdit(true);
+    setComment(comment.comment);
+    setEditKey(comment._key);
+
+    // setPost({ ...post, comments: data.comments });
   };
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -165,9 +184,11 @@ const Detail = ({ postDetails }: IProps) => {
                 )}
               </div>
               <Comments
-                handleDelete={handleDelete}
+                handleCommentEdit={handleCommentEdit}
+                handleCommentDelete={handleCommentDelete}
                 comment={comment}
                 comments={post.comments}
+                edit={edit}
                 setComment={setComment}
                 addComment={addComent}
                 isPostingComment={isPostingComment}

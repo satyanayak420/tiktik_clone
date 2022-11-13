@@ -29,7 +29,7 @@ export default async function handler(
 
     res.status(200).json(data[0]);
   } else if (req.method === "PUT") {
-    const { comment, userId, key } = req.body;
+    const { comment, userId, key, edit, newComment } = req.body;
     const { id }: any = req.query;
     const data = !key
       ? await client
@@ -39,6 +39,17 @@ export default async function handler(
             {
               comment,
               _key: uuid(),
+              postedBy: { _type: "postedBy", _ref: userId },
+            },
+          ])
+          .commit()
+      : edit
+      ? await client
+          .patch(id)
+          .insert("replace", `comments[_key=="${key}"]`, [
+            {
+              comment,
+              _key: key,
               postedBy: { _type: "postedBy", _ref: userId },
             },
           ])

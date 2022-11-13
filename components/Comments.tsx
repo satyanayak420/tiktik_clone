@@ -8,17 +8,20 @@ import { IUser } from "../types";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import { BASE_URL } from "../utils";
+import { BiEdit } from "react-icons/bi";
 
 interface IProps {
   isPostingComment: Boolean;
   comment: string;
   setComment: Dispatch<SetStateAction<string>>;
+  edit: boolean;
   addComment: (e: React.FormEvent) => void;
-  handleDelete: (key: string) => void;
+  handleCommentDelete: (key: string) => void;
+  handleCommentEdit: (commentObj: IComment, edit: boolean) => void;
   comments: IComment[];
 }
 
-interface IComment {
+export interface IComment {
   comment: string;
   length?: number;
   _key: string;
@@ -30,8 +33,10 @@ const Comments = ({
   isPostingComment,
   comments,
   addComment,
-  handleDelete,
+  handleCommentDelete,
+  handleCommentEdit,
   setComment,
+  edit,
 }: IProps) => {
   const { userProfile, allUsers } = useAuthStore();
 
@@ -72,11 +77,15 @@ const Comments = ({
                       </Link>
                       <div className="mt-4 flex justify-between w-full">
                         <p>{comment.comment}</p>
-                        <p
-                          className="text-2xl cursor-pointer"
-                          onClick={() => handleDelete(comment._key)}
-                        >
-                          <MdDelete />
+                        <p className="text-2xl cursor-pointer flex ">
+                          <BiEdit
+                            className="mr-10 text-[#F51997]"
+                            onClick={() => handleCommentEdit(comment, edit)}
+                          />
+                          <MdDelete
+                            className="text-red-600"
+                            onClick={() => handleCommentDelete(comment._key)}
+                          />
                         </p>
                       </div>
                     </div>
