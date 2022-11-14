@@ -136,7 +136,7 @@ const Navbar = () => {
             <Link href={`/profile/${user._id}`}>
               <div>
                 <Image
-                  className="rounded-full cursor-pointer"
+                  className={`rounded-full cursor-pointer ${showLogoutOption}`}
                   src={user.image}
                   alt="user"
                   width={40}
