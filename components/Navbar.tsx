@@ -44,6 +44,7 @@ const Navbar = () => {
   const showLogo = show ? "text-[#F51997] text-4xl md:hidden" : "hidden";
   const showLogo1 = show ? "hidden md:block" : "block";
   const showUploadButton = show ? "hidden  md:flex md:items-center" : "block";
+  const showLogoutOption = show ? "hidden sm:block" : "block";
 
   return (
     <div
@@ -146,7 +147,7 @@ const Navbar = () => {
           )}
           <button
             type="button"
-            className=" border-2 p-2 rounded-full cursor-pointer outline-none shadow-md"
+            className={`border-2 p-2 rounded-full cursor-pointer outline-none shadow-md ${showLogoutOption}`}
             onClick={() => {
               googleLogout();
               removeUser();

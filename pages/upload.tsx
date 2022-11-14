@@ -79,7 +79,7 @@ const Upload = () => {
     <div className="flex w-full h-full absolute left-0 top-[60px] mb-10 pt-10 lg:pt-20 bg-[#F8F8F8] justify-center ">
       <div className="bg-white rounded-lg xl:h-[90vh] w-[60%] flex gap-6 flex-wrap justify-around items-center p-14 pt-6 ">
         <div>
-          <div>
+          <div className="flex flex-col items-center md:items-start">
             <p className="font-bold text-2xl">Upload Video</p>
             <p className="mt-1 text-md text-gray-400">
               Post a video to your account
