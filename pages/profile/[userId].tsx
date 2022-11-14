@@ -21,6 +21,7 @@ const Profile = ({ data }: IProps) => {
   const [videosList, setVideosList] = useState<Video[]>([]);
 
   const { user, userVideos, userLikedVideos } = data;
+  console.log(data);
   const videos = showUserVideos ? "border-b-2 border-black" : "text-gray-400";
   const liked = !showUserVideos ? "border-b-2 border-black" : "text-gray-400";
 
@@ -93,10 +94,10 @@ export const getServerSideProps = async ({
 }: {
   params: { userId: string };
 }) => {
-  const res = await axios.get(`${BASE_URL}/api/profile/${userId}`);
+  const response = await axios.get(`${BASE_URL}/api/profile/${userId}`);
 
   return {
-    props: { data: res.data },
+    props: { data: response.data },
   };
 };
 export default Profile;

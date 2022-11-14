@@ -9,8 +9,8 @@ import useAuthStore from "../store/authStore";
 
 const Sidebar = () => {
   const [showSidebar, setShowSideBar] = useState(true);
-  const { fetchAllUsers, allUsers } = useAuthStore();
-  const userProfile = false;
+  const { fetchAllUsers, allUsers, userProfile } = useAuthStore();
+
   const normalLink =
     "flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold text-[#f51997] rounded";
   return (
@@ -34,10 +34,17 @@ const Sidebar = () => {
             </Link>
           </div>
           <Discover />
-          <SuggestedAccounts
-            fetchAllUsers={fetchAllUsers}
-            allUsers={allUsers}
-          />
+          {userProfile ? (
+            <SuggestedAccounts
+              fetchAllUsers={fetchAllUsers}
+              allUsers={allUsers}
+            />
+          ) : (
+            <h1 className="border-2 border-gray-400 rounded-lg mt-4 text-center p-3 hidden lg:block">
+              Login to see the suggested accounts
+            </h1>
+          )}
+
           <Footer />
         </div>
       )}

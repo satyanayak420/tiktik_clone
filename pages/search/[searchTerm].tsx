@@ -13,7 +13,7 @@ import useAuthStore from "../../store/authStore";
 const Search = ({ videos }: { videos: Video[] }) => {
   const [isAccounts, setIsAccounts] = useState(false);
   const router = useRouter();
-  const { allUsers } = useAuthStore();
+  const { allUsers, userProfile } = useAuthStore();
   const { searchTerm }: any = router.query;
   const searchedAccounts = allUsers.filter((user: IUser) =>
     user.userName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -22,6 +22,7 @@ const Search = ({ videos }: { videos: Video[] }) => {
   const accounts = isAccounts ? "border-b-2 border-black" : "text-gray-400";
   const isVideos = !isAccounts ? "border-b-2 border-black" : "text-gray-400";
   const {} = useAuthStore();
+  if (!userProfile) return <div>Login to search videos</div>;
   return (
     <div className="w-full">
       <div className="flex gap-10 mb-10 mt-10 border-b-2 border-gray-200 bg-white w-full">
