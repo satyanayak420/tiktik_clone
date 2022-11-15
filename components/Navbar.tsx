@@ -48,7 +48,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`w-full relative flex justify-between items-center border-b-2 border-gray-200 py-2 px-4 items-center`}
+      className={`w-full relative flex justify-between items-center border-b-2 border-gray-200 py-2 px-4`}
     >
       <Link href="/">
         <FaVideo className={`${showLogo}`} />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
@@ -12,6 +12,8 @@ import useAuthStore from "../../store/authStore";
 
 const Search = ({ videos }: { videos: Video[] }) => {
   const [isAccounts, setIsAccounts] = useState(false);
+  // const AccountRef = React.createRef()
+  // const VideosRef = React.createRef()
   const router = useRouter();
   const { allUsers, userProfile } = useAuthStore();
   const { searchTerm }: any = router.query;
@@ -27,12 +29,14 @@ const Search = ({ videos }: { videos: Video[] }) => {
     <div className="w-full">
       <div className="flex gap-10 mb-10 mt-10 border-b-2 border-gray-200 bg-white w-full">
         <p
+          // ref={AccountRef}
           className={` text-xl font-semibold cursor-pointer mt-2 ${accounts}`}
           onClick={() => setIsAccounts(true)}
         >
           Accounts
         </p>
         <p
+          // ref={VideosRef}
           className={` text-xl font-semibold cursor-pointer mt-2 ${isVideos}`}
           onClick={() => setIsAccounts(false)}
         >

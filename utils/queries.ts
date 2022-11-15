@@ -23,7 +23,8 @@ export const allPostsQuery = () => {
       userName,
       image
     },
-    }
+    },
+    
   }`;
 
   return query;
@@ -32,6 +33,7 @@ export const allPostsQuery = () => {
 export const postDetailQuery = (postId: any) => {
   const query = `*[_type == "post" && _id == '${postId}']{
     _id,
+    topic,
      caption,
        video{
         asset->{
@@ -53,8 +55,8 @@ export const postDetailQuery = (postId: any) => {
         _ref,
       _id,
     },
-    }
-  }`;
+    },
+    }`;
   return query;
 };
 
