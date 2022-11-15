@@ -3,13 +3,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { HiVolumeOff, HiVolumeUp } from "react-icons/hi";
 import { BsPlay, BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
-import { BiDotsVerticalRounded } from "react-icons/bi";
+import { HiDotsHorizontal } from "react-icons/hi";
 import { GoVerified } from "react-icons/go";
 import { Video } from "../types";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { BASE_URL } from "../utils";
 import { setDefaultResultOrder } from "dns";
+import { MdDelete } from "react-icons/md";
+import axios from "axios";
+import useAuthStore from "../store/authStore";
+import swal from "sweetalert";
 
 interface IProps {
   post: Video;
@@ -23,10 +27,10 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
   const [isHover, setIsHover] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
-  const [deletePost, setDeletePost] = useState(false);
-  const router = useRouter();
 
-  console.log(post);
+  const router = useRouter();
+  const { userProfile }: any = useAuthStore();
+
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const onVideoPress = () => {
@@ -45,7 +49,18 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
     }
   }, [isVideoMuted]);
 
-  const handleDelete = () => {};
+  const handleDelete = async (id: string) => {
+    if (userProfile._id === post.postedBy._id) {
+      await axios
+        .delete(`${BASE_URL}/api/post/${id}`)
+        .then((response) => console.log(response))
+        .catch((error) => {
+          console.log(error.response.data.message);
+        });
+    } else {
+      swal("You are not allowed to delete other user's post");
+    }
+  };
 
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
@@ -96,17 +111,15 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
             />
           </Link>
 
-          {deletePost && (
-            <button className="absolute top-14 right-13 border-2">
-              Delete
-            </button>
-          )}
+          <button
+            className="absolute top-14 right-20 text-xl p-2 hover:rounded-full hover:bg-gray-200"
+            onClick={() => handleDelete(post._id)}
+          >
+            <MdDelete className="text-2xl text-gray-400 cursor-pointer" />
+          </button>
 
           {isHover && (
             <div>
-              <button className="absolute top-14 right-20 border-2">
-                <BiDotsVerticalRounded />
-              </button>
               <div className="absolute bottom-6 cursor-pointer left-8 md:left-14 lg:left-0 flex gap-10 lg:justify-between w-[100px] md:w-[50px] lg:w-[600px]  p-3">
                 {playing ? (
                   <button onClick={onVideoPress}>

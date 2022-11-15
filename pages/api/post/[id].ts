@@ -60,5 +60,18 @@ export default async function handler(
           .commit();
 
     res.status(200).json(data);
+  } else if (req.method === "DELETE") {
+    const { id }: any = req.query;
+    // const { user,post } = req.body
+
+    client
+      .delete(id)
+      .then(() => {
+        console.log("Post deleted");
+      })
+      .catch((err) => {
+        console.error("Delete failed: ", err.message);
+      });
+    res.status(200).json("Your post has been deleted");
   }
 }

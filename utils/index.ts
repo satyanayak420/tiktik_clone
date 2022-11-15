@@ -7,6 +7,7 @@ export const createOrGetUser = async (response: any, addUser: any) => {
   const decoded: { name: string; picture: string; sub: string } = jwtDecode(
     response.credential
   );
+
   const { name, picture, sub } = decoded;
 
   const user = {

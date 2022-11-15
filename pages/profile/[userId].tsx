@@ -21,7 +21,7 @@ const Profile = ({ data }: IProps) => {
   const [videosList, setVideosList] = useState<Video[]>([]);
 
   const { user, userVideos, userLikedVideos } = data;
-  console.log(data);
+
   const videos = showUserVideos ? "border-b-2 border-black" : "text-gray-400";
   const liked = !showUserVideos ? "border-b-2 border-black" : "text-gray-400";
 

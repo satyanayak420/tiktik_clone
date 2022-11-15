@@ -29,7 +29,6 @@ const Detail = ({ postDetails }: IProps) => {
   const [edit, setEdit] = useState(false);
   const router = useRouter();
   const { userProfile }: any = useAuthStore();
-  console.log(userProfile);
 
   const handleLike = async (like: boolean) => {
     if (userProfile) {

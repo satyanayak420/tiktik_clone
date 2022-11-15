@@ -152,6 +152,7 @@ const Navbar = () => {
             onClick={() => {
               googleLogout();
               removeUser();
+              localStorage.removeItem("firstTime");
             }}
           >
             <AiOutlineLogout color="red" fontSize={21} />
