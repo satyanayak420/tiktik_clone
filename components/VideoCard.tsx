@@ -112,7 +112,7 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
           </Link>
 
           <button
-            className="absolute top-14 right-20 text-xl p-2 hover:rounded-full hover:bg-gray-200"
+            className="absolute   top-14 right-24 md:right-20 text-xl p-2 hover:rounded-full hover:bg-gray-200"
             onClick={() => handleDelete(post._id)}
           >
             <MdDelete className="text-2xl text-gray-400 cursor-pointer" />
