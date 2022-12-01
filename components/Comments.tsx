@@ -38,8 +38,7 @@ const Comments = ({
   setComment,
   edit,
 }: IProps) => {
-  const { userProfile }: { userProfile: any } = useAuthStore();
-  const { allUsers } = useAuthStore();
+  const { userProfile, allUsers } = useAuthStore();
 
   return (
     <div className="border-t-2 border-gray-200 pt-4 px-10 bg-[#F8F8F8] border-b-2 lg:pb-0 pb-[100px]">
@@ -76,20 +75,16 @@ const Comments = ({
                       </Link>
                       <div className="mt-4 flex justify-between w-full">
                         <p>{comment.comment}</p>
-                        {userProfile?._id === comment?.postedBy?._id ? (
-                          <p className="text-2xl cursor-pointer flex ">
-                            <BiEdit
-                              className="mr-10 text-[#F51997]"
-                              onClick={() => handleCommentEdit(comment, edit)}
-                            />
-                            <MdDelete
-                              className="text-red-600"
-                              onClick={() => handleCommentDelete(comment._key)}
-                            />
-                          </p>
-                        ) : (
-                          ""
-                        )}
+                        <p className="text-2xl cursor-pointer flex ">
+                          <BiEdit
+                            className="mr-10 text-[#F51997]"
+                            onClick={() => handleCommentEdit(comment, edit)}
+                          />
+                          <MdDelete
+                            className="text-red-600"
+                            onClick={() => handleCommentDelete(comment._key)}
+                          />
+                        </p>
                       </div>
                     </div>
                   )
